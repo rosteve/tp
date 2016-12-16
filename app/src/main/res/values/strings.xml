@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Prediction</string>
+    <string name="title_activity_save">SaveActivity</string>
+    <string name="title_activity_test_model">TestModel</string>
+    <string name="title_activity_bayes_server">BayesServer</string>
+    <string name="title_activity_traffic_prediction">TrafficPredictionActivity</string>
+    <string name="title_activity_process_location">ProcessLocation</string>
+</resources>

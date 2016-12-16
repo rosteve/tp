@@ -1,0 +1,74 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="3dp">
+    <!--60dp-->
+
+
+    <!-- <TextView
+         android:id="@+id/textView"
+         android:layout_width="40dp"
+         android:layout_height="32dp"
+         android:background="@drawable/carddemo_mayknow_add"
+         android:textColor="#BBB"
+         android:textSize="12sp"
+         android:text="Mimi"
+         android:layout_alignBottom="@+id/description"
+         android:layout_centerHorizontal="true"
+         android:layout_toEndOf="@+id/carddemo_gplay_main_inner_subtitle2"
+         android:layout_toRightOf="@+id/carddemo_gplay_main_inner_subtitle2"
+         android:layout_marginLeft="30dp"/>-->
+
+    <traffic.guru.prediction.ColorArcProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/bar1"
+        app:is_need_content="true"
+        app:front_color1="#00ff00"
+        app:front_color2="#ffff00"
+        app:front_color3="#ff0000"
+        app:max_value="100"
+        app:back_width="10dp"
+        app:front_width="10dp"
+        app:total_engle="270"
+        app:is_need_unit="true"
+        app:string_unit="Traffic"
+        app:back_color="@android:color/darker_gray"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="27dp"
+        android:layout_marginEnd="27dp" />
+
+    <TextView
+        android:id="@+id/carddemo_gplay_main_inner_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000"
+        android:textSize="50sp"
+        android:text="Name"
+        android:layout_marginTop="13dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+         />
+
+    <TextView
+        android:id="@+id/carddemo_gplay_main_inner_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:text="description"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:textSize="12sp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/carddemo_gplay_main_inner_title"
+        android:layout_alignRight="@+id/carddemo_gplay_main_inner_title"
+        android:layout_alignEnd="@+id/carddemo_gplay_main_inner_title" />
+
+
+</RelativeLayout>
