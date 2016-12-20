@@ -19,6 +19,11 @@ public class MyShortcuts {
     public static String baseURL(){
         return "http://api.openweathermap.org/data/2.5/forecast/city?id=184745&APPID=8d9d269042d088f9c62949dc35e777f4";
     }
+    public static String tweetURL(){
+        return "http://192.168.0.17/twit/src/index.php";
+    }
+
+
 
     public static String dataURL(){
         return "http://41.204.186.47:8000/";

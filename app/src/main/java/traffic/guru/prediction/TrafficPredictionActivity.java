@@ -12,19 +12,15 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -36,9 +32,6 @@ import android.widget.Toast;
 import com.codetroopers.betterpickers.timepicker.TimePickerBuilder;
 import com.codetroopers.betterpickers.timepicker.TimePickerDialogFragment;
 
-import io.nlopez.smartlocation.location.providers.LocationGooglePlayServicesProvider;
-import traffic.guru.prediction.ColorArcProgressBar;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -47,10 +40,10 @@ import java.util.Date;
 import java.util.List;
 
 import Interface.ServerCallback;
+import io.nlopez.smartlocation.location.providers.LocationGooglePlayServicesProvider;
 import it.gmariotti.cardslib.library.internal.Card;
 import it.gmariotti.cardslib.library.internal.CardGridArrayAdapter;
 import it.gmariotti.cardslib.library.internal.CardHeader;
-import it.gmariotti.cardslib.library.internal.CardThumbnail;
 import it.gmariotti.cardslib.library.internal.base.BaseCard;
 import it.gmariotti.cardslib.library.view.CardGridView;
 
@@ -79,7 +72,8 @@ public class TrafficPredictionActivity extends AppCompatActivity implements Time
         cards = new ArrayList<Card>();
         final Calendar calendar = Calendar.getInstance();
         final SimpleDateFormat dfa = new SimpleDateFormat("HH:mm");
-        DynamicTrafficPrediction dynamicTrafficPrediction = new DynamicTrafficPrediction(this, calendar);
+
+        /*DynamicTrafficPrediction dynamicTrafficPrediction = new DynamicTrafficPrediction(this, calendar);
         dynamicTrafficPrediction.onlinedata(new ServerCallback() {
             @Override
             public void onSuccess(String result) {
@@ -121,6 +115,71 @@ public class TrafficPredictionActivity extends AppCompatActivity implements Time
                         mCardArrayAdapter.notifyDataSetChanged();
 
                         DynamicTrafficPrediction dynamicTrafficPrediction3 = new DynamicTrafficPrediction(getBaseContext(), calendar3);
+                        dynamicTrafficPrediction3.onlinedata(new ServerCallback() {
+                            @Override
+                            public void onSuccess(String result) {
+                                Log.e("prediction six", result);
+
+                                GplayGridCard card = new GplayGridCard(getBaseContext());
+
+                                card.secondaryTitle = dfa.format(calendar3.getTime());
+                                ;
+                                card.rating = result;
+
+                                card.init();
+                                cards.add(card);
+                                Calendar calendar3 = Calendar.getInstance();
+                                calendar3.add(Calendar.HOUR, 6);
+                                mCardArrayAdapter.notifyDataSetChanged();
+                            }
+                        });
+                    }
+                });
+            }
+        });
+*/
+       TrafficPrediction TrafficPrediction = new TrafficPrediction(this, calendar);
+        TrafficPrediction.onlinedata(new ServerCallback() {
+            @Override
+            public void onSuccess(String result) {
+                Log.e("Prediction now is", result);
+                GplayGridCard card = new GplayGridCard(getBaseContext());
+                card.headerTitle = dfa.format(calendar.getTime());
+                card.secondaryTitle = dfa.format(calendar.getTime());
+                ;
+                card.rating = result;
+
+                card.init();
+                cards.add(card);
+
+                mCardArrayAdapter = new CardGridArrayAdapter(getBaseContext(), cards);
+
+                CardGridView listView = (CardGridView) findViewById(R.id.card_grid);
+                if (listView != null) {
+                    listView.setAdapter(mCardArrayAdapter);
+                }
+
+                final Calendar calendar2 = Calendar.getInstance();
+                calendar2.add(Calendar.HOUR, 3);
+
+                TrafficPrediction dynamicTrafficPrediction2 = new TrafficPrediction(getBaseContext(), calendar2);
+                dynamicTrafficPrediction2.onlinedata(new ServerCallback() {
+                    @Override
+                    public void onSuccess(String results) {
+                        Log.e("Prediction three is", results);
+                        GplayGridCard card2 = new GplayGridCard(getBaseContext());
+
+                        card2.secondaryTitle = dfa.format(calendar2.getTime());
+                        ;
+                        card2.rating = results;
+
+                        card2.init();
+                        cards.add(card2);
+                        final Calendar calendar3 = Calendar.getInstance();
+                        calendar3.add(Calendar.HOUR, 6);
+                        mCardArrayAdapter.notifyDataSetChanged();
+
+                        TrafficPrediction dynamicTrafficPrediction3 = new TrafficPrediction(getBaseContext(), calendar3);
                         dynamicTrafficPrediction3.onlinedata(new ServerCallback() {
                             @Override
                             public void onSuccess(String result) {
@@ -411,23 +470,44 @@ public class TrafficPredictionActivity extends AppCompatActivity implements Time
     public void startAlert(int minutes) {
 
         Intent intent = new Intent(this, MyBroadcastReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+       /* PendingIntent pendingIntent = PendingIntent.getBroadcast(
                 this.getApplicationContext(), 234324243, intent, 0);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, minutes * 60 * 10 * 1000, pendingIntent);
+        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, minutes * 60 * 10 * 1000, pendingIntent);*/
+
+        // get a Calendar object with current time
+        Calendar cal = Calendar.getInstance();
+        // add 30 seconds to the calendar object
+        int sec=minutes*60;
+        Log.e("sec",sec+" sec");
+        cal.add(Calendar.SECOND,sec);
+        PendingIntent sender = PendingIntent.getBroadcast(getBaseContext(), 192837, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        // Get the AlarmManager service
+        AlarmManager am = (AlarmManager) getBaseContext().getSystemService(getBaseContext().ALARM_SERVICE);
+        am.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), sender);
+
+       /* PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0,
+                intent, 0);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, minutes*60*1000 + (10 * 1000), pendingIntent);*/
+//        Toast.makeText(this, "Alarm set", Toast.LENGTH_LONG).show();
+
+
        /* alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()
                 + (10 * 1000), (10 * 1000), pendingIntent);*/
        /* alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()
                 + (10 * 1000), 8000, pendingIntent);*/
-        Toast.makeText(this, "Starting alarm in " + 10 + " seconds",
+        Toast.makeText(this, "Starting alarm in " + minutes + " minutes",
                 Toast.LENGTH_LONG).show();
     }
 
     public static Notification getNotification(String content, Context context) {
         Notification.Builder builder = new Notification.Builder(context);
-        builder.setContentTitle("Scheduled Notification");
+        builder.setContentTitle("Traffic reminder");
         builder.setContentText(content);
-        builder.setSmallIcon(R.drawable.common_google_signin_btn_icon_dark);
+        builder.setSmallIcon(R.drawable.jam);
         return builder.build();
     }
 
@@ -511,7 +591,7 @@ public class TrafficPredictionActivity extends AppCompatActivity implements Time
         long diffMinutes = diff / (60 * 1000) ;
         int min= (int) diffMinutes;
         Log.e("minutes",min+" minutes");
-//        startAlert(min);
+        startAlert(min);
     }
 
 

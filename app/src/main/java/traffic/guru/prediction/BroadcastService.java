@@ -216,14 +216,14 @@ public class BroadcastService extends Service implements OnActivityUpdatedListen
 //                    getNameFromType(detectedActivity) +
 //                            detectedActivity.getConfidence() + "");
 
-            if (getNameFromType(detectedActivity).equals("still") && getDefaults("previous", getBaseContext()).equals("still")) {
+            /*if (getNameFromType(detectedActivity).equals("still") && getDefaults("previous", getBaseContext()).equals("still")) {
 //                Toast.makeText(getBaseContext(), "remained same from " + getDefaults("previous", getBaseContext()), Toast.LENGTH_SHORT).show();
 
 //                Toast.makeText(getBaseContext(), "!!!!!!!!!! ", Toast.LENGTH_SHORT).show();
 
 
             }
-
+*/
         } else {
 //            activityText.setText("Null activity");
             activity = "NUll activity";

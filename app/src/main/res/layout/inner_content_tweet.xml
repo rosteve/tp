@@ -1,0 +1,72 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="3dp">
+<!--60dp-->
+   <!-- <TextView
+        android:id="@+id/carddemo_gplay_main_inner_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:textColor="@android:color/black"
+        android:text="Name"
+        android:textSize="12sp"
+        android:layout_marginTop="10dp"/>-->
+
+    <TextView
+        android:id="@+id/carddemo_gplay_main_inner_subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#000"
+        android:textSize="20sp"
+        android:text="Name"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+         />
+
+
+
+    <TextView
+        android:id="@+id/carddemo_gplay_main_inner_subtitle2"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:textColor="#000"
+        android:textSize="12sp"
+        android:text=""
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="5dp"
+        android:layout_below="@+id/carddemo_gplay_main_inner_subtitle"
+
+         />
+
+
+   <!-- <TextView
+        android:id="@+id/textView"
+        android:layout_width="40dp"
+        android:layout_height="32dp"
+        android:background="@drawable/carddemo_mayknow_add"
+        android:textColor="#BBB"
+        android:textSize="12sp"
+        android:text="Mimi"
+        android:layout_alignBottom="@+id/description"
+        android:layout_centerHorizontal="true"
+        android:layout_toEndOf="@+id/carddemo_gplay_main_inner_subtitle2"
+        android:layout_toRightOf="@+id/carddemo_gplay_main_inner_subtitle2"
+        android:layout_marginLeft="30dp"/>-->
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="5dp"
+        android:textColor="#BBB"
+        android:textSize="12sp"
+        android:visibility="invisible" />
+
+
+
+</RelativeLayout>
