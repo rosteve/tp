@@ -37,4 +37,5 @@ dependencies {
     compile 'com.github.gabrielemariotti.cards:cardslib-core:2.1.0'
 //    compile project(':slideDateTimePicker')
     compile 'com.code-troopers.betterpickers:library:2.2.2'
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.1'
 }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="traffic.guru.prediction.TrafficPredictionActivity">
+    tools:context="traffic.guru.prediction.Nav">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_traffic_prediction" />
+    <include layout="@layout/content_nav" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -29,9 +29,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:background="#FF9100"
-        app:backgroundTint="#FF9100"
-        app:srcCompat="@drawable/plus" />
-
+        app:srcCompat="@android:drawable/ic_dialog_email" />
 
 </android.support.design.widget.CoordinatorLayout>

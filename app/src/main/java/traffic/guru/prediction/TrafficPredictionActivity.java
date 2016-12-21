@@ -11,9 +11,17 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -47,7 +55,7 @@ import it.gmariotti.cardslib.library.internal.CardHeader;
 import it.gmariotti.cardslib.library.internal.base.BaseCard;
 import it.gmariotti.cardslib.library.view.CardGridView;
 
-public class TrafficPredictionActivity extends AppCompatActivity implements TimePickerDialogFragment.TimePickerDialogHandler {
+public class TrafficPredictionActivity extends AppCompatActivity implements TimePickerDialogFragment.TimePickerDialogHandler,NavigationView.OnNavigationItemSelectedListener {
     static CardGridArrayAdapter mCardArrayAdapter;
     ArrayList<Card> cards;
     public static LocationGooglePlayServicesProvider provider;
@@ -60,14 +68,28 @@ public class TrafficPredictionActivity extends AppCompatActivity implements Time
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_traffic_prediction);
+        setContentView(R.layout.app_bar_traffic_prediction);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         showPermissionDialog();
         setTitle("Traffic Predictions");
 
         intent = new Intent(this, BroadcastService.class);
-        intent = new Intent(this, BroadcastService.class);
+//        intent = new Intent(this, BroadcastService.class);
+
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Add Reminder, Please set time", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                TimePickerBuilder tpb = new TimePickerBuilder()
+                        .setFragmentManager(getSupportFragmentManager())
+                        .setStyleResId(R.style.BetterPickersDialogFragment);
+                tpb.show();
+            }
+        });
 
         cards = new ArrayList<Card>();
         final Calendar calendar = Calendar.getInstance();
@@ -202,6 +224,16 @@ public class TrafficPredictionActivity extends AppCompatActivity implements Time
                 });
             }
         });
+
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
 
     }
@@ -499,15 +531,18 @@ public class TrafficPredictionActivity extends AppCompatActivity implements Time
                 + (10 * 1000), (10 * 1000), pendingIntent);*/
        /* alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()
                 + (10 * 1000), 8000, pendingIntent);*/
-        Toast.makeText(this, "Starting alarm in " + minutes + " minutes",
+        Toast.makeText(this, "Reminder set!",
                 Toast.LENGTH_LONG).show();
     }
+
 
     public static Notification getNotification(String content, Context context) {
         Notification.Builder builder = new Notification.Builder(context);
         builder.setContentTitle("Traffic reminder");
         builder.setContentText(content);
         builder.setSmallIcon(R.drawable.jam);
+        Uri uri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        builder.setSound(uri);
         return builder.build();
     }
 
@@ -592,6 +627,51 @@ public class TrafficPredictionActivity extends AppCompatActivity implements Time
         int min= (int) diffMinutes;
         Log.e("minutes",min+" minutes");
         startAlert(min);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.prediction) {
+            Intent intent = new Intent(getBaseContext(),TrafficPredictionActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.twitter) {
+            Intent intent = new Intent(getBaseContext(),Tweet.class);
+            startActivity(intent);
+
+        } else if (id == R.id.graph) {
+            Intent intent = new Intent(getBaseContext(),Graph.class);
+            startActivity(intent);
+
+        }
+
+       /* } else if (id == R.id.nav_slideshow) {
+
+        } else if (id == R.id.nav_manage) {
+
+        } else if (id == R.id.nav_share) {
+
+        } else if (id == R.id.nav_send) {
+
+        }*/
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
 
